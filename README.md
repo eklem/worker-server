@@ -1,5 +1,16 @@
 # worker-server
-JavaScript - Browser service worker as a server. Example library on how it can be done. Short: fetch(.someFileInScope?message={messageObjetc}) for app->service-worker and postMessage for service-worker->app.
+JavaScript service worker as a server. Example library on how it can be done.
+
+app -> service-worker communication:
+```javascript
+fetch(.someFileInScope?message={messageObjetc})
+```
+
+ service-worker->app:
+ ```javascript
+const broadcast = new BroadcastChannel('sw_app_serviceworker)
+broadcast.postMessage({messageObject})
+ ```
 
 ## WIP
 
