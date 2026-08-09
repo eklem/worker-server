@@ -1,5 +1,5 @@
 # worker-server
-JavaScript service worker as a server. Example library on how it can be done. This way you can have a JavaScript server in your browser, doing heavy lifting and not be in the way of the frontend JavaScript.
+JavaScript service worker as a server. Example library on how it can be done. This way you can have a JavaScript server in your browser, doing heavy lifting and not be in the way of the frontend JavaScript. It will also be easier to create example servers that can easily be included in a new project.
 
 **app -> service-worker communication:**
 
