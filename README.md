@@ -1,12 +1,12 @@
 # worker-server
-JavaScript service worker as a server. Example library on how it can be done.
+JavaScript service worker as a server. Example library on how it can be done. This way you can have a JavaScript server in your browser, doing heavy lifting and not be in the way of the frontend JavaScript.
 
-app -> service-worker communication:
+**app -> service-worker communication:**
 ```javascript
 fetch(.someFileInScope?message={messageObjetc})
 ```
 
- service-worker->app:
+ **service-worker->app:**
  ```javascript
 const broadcast = new BroadcastChannel('sw_app_serviceworker)
 broadcast.postMessage({messageObject})
