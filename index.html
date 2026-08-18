@@ -3,22 +3,22 @@
   <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="./mini-default.min.css">
-    <link rel="stylesheet" href="./demo-app.css">
-    <script src="../dist/batr-example.umd.js"></script>
+    <link rel="stylesheet" href="./styles-default.min.css">
+    <link rel="stylesheet" href="./styles.css">
     <title>Worker server example</title>
   </head>
   <body>
     <h1>Testing a simple JavaScript browser server, running inside the service worker</h1>
     <input type="number" size="10" value="0" id="firstNumber">
-    <select name="calculation" id="mathselector">
-        <option value="add">+ added to</option>
-        <option value="subtract">- subtracted by</option>
-        <option value="multiply">* multiplied by</option>
-        <option value="divide">/ divide by</option>
+    <select name="calculation" id="arithmeticSymbol">
+        <option value="+">+ added to</option>
+        <option value="-">- subtracted by</option>
+        <option value="*">* multiplied by</option>
+        <option value="/">/ divide by</option>
     </select>
     <input type="number" size="10" value="0" id="secondNumber">
+    <button id="calculate">Calculate!</button>
     <h2 id="result">= <span id="resultNumber"></span></h2>
-    <script src="./demo-app.js"></script>
+    <script type="module" src="app.js"></script>
   </body>
 </html>
