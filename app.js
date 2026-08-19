@@ -43,5 +43,12 @@ calculateButton.addEventListener('click', (event) => {
   const arithmeticSymbol = document.getElementById('arithmeticSymbol').value
   const secondNumber = document.getElementById('secondNumber').value
   console.log('calculating: ' + firstNumber + ' ' + arithmeticSymbol + ' ' + secondNumber)
-  fetch(window.location.origin + window.location.pathname + 'API?' + arithmeticSymbol + '={"firstNumber": "' + firstNumber + '", "secondNumber": "' + secondNumber + '"}', {mode: 'cors'})
+  const fetchPromise = fetch(window.location.origin + window.location.pathname + 'API?' + arithmeticSymbol + '={"firstNumber":' + firstNumber + ',"secondNumber":' + secondNumber + '}', {mode: 'cors', headers: { 'Access-Control-Allow-Origin': '*'}})
+  fetchPromise
+    .then((response) => response.json())
+    .then((data) => {
+      console.log(data)
+      // Do something with what's returned
+    })
+
 })
