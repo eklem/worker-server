@@ -74,8 +74,7 @@ self.addEventListener('fetch', function (event) {
     event.respondWith(
       (async () => {
         let responseHeaders = new Headers({
-          'Content-Type': 'application/json; charset=UTF-8',
-          'Access-Control-Allow-Origin': '*',
+          'Content-Type': 'application/json; charset=UTF-8'
         })
         console.log(responseHeaders.get('Content-Type'))
         // If we didn't find a match in the cache, use the network.
