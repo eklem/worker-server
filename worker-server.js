@@ -16,6 +16,31 @@ broadcastChannel.onmessageerror = (error) => {
 /* ### ########################################################### ### */
 /* ### Fetch event listener + control switch                       ### */
 
+/* ### ########################################################### ### */
+/* ### URL regexes for control switch                              ### */
+const switchRegex = /(?<=\/API\?)\w*(?=={)/
+const objectRegex = /{.*}$/
+const apiUrlRegex = /.*(?=\?)/
+
+const getCommand = function (url) {
+  let command = switchRegex.exec(url)
+  command = command[0]
+  return command
+}
+
+const getUrlJSON = function (url) {
+  let urlJson = objectRegex.exec(url)
+  urlJson = urlJson[0]
+  urlJson = JSON.parse(urlJson)
+  return urlJson
+}
+
+const getApiUrl = function (url) {
+  const apiUrl = apiUrlRegex.exec(url)
+  console.log('### ######### API URL: ' + apiUrl)
+  return apiUrl
+}
+
 self.addEventListener('fetch', function (event) {
   console.dir(event.request)
   const request = event.request
@@ -23,18 +48,23 @@ self.addEventListener('fetch', function (event) {
   if (url.includes('API')) {
     let command = getCommand(url)
     let urlJson = getUrlJSON(url)
-    let apiUrl = getCacheUrl(url)
+    let apiUrl = getApiUrl(url)
     console.log('### Command: ' + command)
     console.log('### UrlJson: ' + JSON.stringify(urlJson))
     console.log('###  apiUrl: ' + apiUrl)
     console.log('### sw.js: fetch eventlistener: ' + url)
     switch (command) {
-      case 'apiFetch':
-        getSessions(urlJson.url)
-        broadcastMeta.postMessage('### sw -> app: apiFetch: ' + urlJson)
+      case 'add':
+        broadcastChannel.postMessage('### sw -> app: add')
         break
-      case 'query':
-        broadcastMeta.postMessage('### sw -> app: query: ' + urlJson.query)
+      case 'subtract':
+        broadcastChannel.postMessage('### sw -> app: subtract')
+        break
+      case 'multiply':
+        broadcastChannel.postMessage('### sw -> app: multiply')
+        break
+      case 'divide':
+        broadcastChannel.postMessage('### sw -> app: divide')
         break
       default:
         console.log('Andre kommandoer');
@@ -43,12 +73,16 @@ self.addEventListener('fetch', function (event) {
     // ### Fake response since the request is the point
     event.respondWith(
       (async () => {
-        // Try to get the response from a cache.
-        const cachedResponse = await caches.match(event.request);
-        // Return it if we found one.
-        if (cachedResponse) return cachedResponse;
+        let responseHeaders = new Headers({
+          'Content-Type': 'application/json; charset=UTF-8',
+        })
+        // let responseHeaders = new Headers()
+        // responseHeaders.append({
+        //   'Content-Type': 'application/json'
+        // })
+        console.log(responseHeaders.get('Content-Type'))
         // If we didn't find a match in the cache, use the network.
-        return new Response (null, { status: 204, url: './API' })
+        return new Response (JSON.stringify(urlJson), { status: 200, responseHeaders, url: './API' })
       })(),
     )
   }

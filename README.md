@@ -1,5 +1,10 @@
 # worker-server
-JavaScript service worker as a server. Example library on how it can be done. This way you can have a JavaScript server in your browser, doing heavy lifting and not be in the way of the frontend JavaScript. It will also be easier to create example servers that can easily be included in a new project.
+JavaScript service worker as a server. Example library on how it can be done. 
+
+Advantages:
+
+* Having a JavaScript server in your browser, doing the heavy lifting and not being in the way of the frontend JavaScript since it's running in a separate thread.
+* You can create a server based on a JavaScript library and make it easy for others to include it in their project.
 
 **app -> service-worker communication:**
 
@@ -12,7 +17,7 @@ And a listener in the service-worker triggered by this fetch:
 ```javascript
 self.addEventListener('fetch', function (event) {
   if (url.includes('someFileInScope')) {
-    // act on message sent from frontend.
+    // act on message sent from frontend app.
   }
 })
 ```

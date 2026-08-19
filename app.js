@@ -43,5 +43,5 @@ calculateButton.addEventListener('click', (event) => {
   const arithmeticSymbol = document.getElementById('arithmeticSymbol').value
   const secondNumber = document.getElementById('secondNumber').value
   console.log('calculating: ' + firstNumber + ' ' + arithmeticSymbol + ' ' + secondNumber)
-  fetch(window.location.origin + window.location.pathname + 'API?' + arithmeticSymbol + '={"firstNumber": "' + firstNumber + '", "secondNumber": "' + secondNumber + '"}')
+  fetch(window.location.origin + window.location.pathname + 'API?' + arithmeticSymbol + '={"firstNumber": "' + firstNumber + '", "secondNumber": "' + secondNumber + '"}', {mode: 'no-cors'})
 })
