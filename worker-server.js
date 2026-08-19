@@ -73,13 +73,13 @@ self.addEventListener('fetch', function (event) {
     // ### Fake response since the request is the point
     event.respondWith(
       (async () => {
-        // let responseHeaders = new Headers({
-        //   // 'Content-Type': 'application/json; charset=UTF-8',
-        //   'Access-Control-Allow-Origin': '*',
-        // })
-        // console.log(responseHeaders.get('Content-Type'))
+        let responseHeaders = new Headers({
+          'Content-Type': 'application/json; charset=UTF-8',
+          'Access-Control-Allow-Origin': '*',
+        })
+        console.log(responseHeaders.get('Content-Type'))
         // If we didn't find a match in the cache, use the network.
-        return new Response (JSON.stringify(urlJson), { url: './API' })
+        return new Response (JSON.stringify(urlJson), { url: './API', responseHeaders })
       })(),
     )
   }
