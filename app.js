@@ -39,9 +39,9 @@ if ("serviceWorker" in navigator) {
 const calculateButton = document.getElementById('calculate')
 
 calculateButton.addEventListener('click', (event) => {
-  const firstNumber = document.getElementById('firstNumber').value
   const arithmeticSymbol = document.getElementById('arithmeticSymbol').value
-  const secondNumber = document.getElementById('secondNumber').value
+  const firstNumber = Number(document.getElementById('firstNumber').value)
+  const secondNumber = Number(document.getElementById('secondNumber').value)
   console.log('calculating: ' + firstNumber + ' ' + arithmeticSymbol + ' ' + secondNumber)
   const fetchPromise = fetch(window.location.origin + window.location.pathname + 'API?' + arithmeticSymbol + '={"firstNumber":' + firstNumber + ',"secondNumber":' + secondNumber + '}', {mode: 'cors', headers: { 'Access-Control-Allow-Origin': '*'}})
   fetchPromise

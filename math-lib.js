@@ -1,0 +1,3 @@
+const add = function (number) {
+  
+}

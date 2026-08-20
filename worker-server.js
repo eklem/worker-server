@@ -70,14 +70,14 @@ self.addEventListener('fetch', function (event) {
         console.log('Andre kommandoer');
     }
 
-    // ### Fake response since the request is the point
+    // ### Responding 
     event.respondWith(
       (async () => {
         let responseHeaders = new Headers({
           'Content-Type': 'application/json; charset=UTF-8'
         })
         console.log(responseHeaders.get('Content-Type'))
-        // If we didn't find a match in the cache, use the network.
+        // Just returning a JSON object without hitting the server
         return new Response (JSON.stringify(urlJson), { url: './API', responseHeaders })
       })(),
     )
