@@ -1,0 +1,22 @@
+{
+  "short_name": "worker-server",
+  "name": "worker-server",
+  "description": "JavaScript service worker as a server",
+  "start_url": "./",
+  "background_color": "#ffffff",
+  "display": "standalone",
+  "scope": "/worker-api-server/",
+  "icons": [
+    {
+      "src": "./img/icon-192x192.png",
+      "type": "image/png",
+            "sizes": "192x192"
+    },
+    {
+      "src": "./img/icon-512x512.png",
+      "type": "image/png",
+      "sizes": "512x512"
+    }
+  ],
+  "theme_color": "#702146"
+}

@@ -18,7 +18,7 @@ broadcastChannel.onmessageerror = (error) => {
 
 if ("serviceWorker" in navigator) {
   // Register a service worker hosted at the root of the
-  navigator.serviceWorker.register(window.location.origin + window.location.pathname + 'worker-server.js', { 
+  navigator.serviceWorker.register(window.location.origin + window.location.pathname + 'worker-api-server.js', { 
     type: 'module',
     scope: window.location.origin + window.location.pathname
   })
