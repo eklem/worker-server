@@ -1,6 +1,6 @@
 {
-  "short_name": "worker-server",
-  "name": "worker-server",
+  "short_name": "worker-api-server",
+  "name": "worker-api-server",
   "description": "JavaScript service worker as a server",
   "start_url": "./index.html",
   "background_color": "#ffffff",
