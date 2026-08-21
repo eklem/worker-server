@@ -13,12 +13,12 @@ broadcastChannel.onmessage = (message) => {
 /* ### ########################################################### ### */
 /* ### Fetch event listener + control switch                       ### */
 
-// ### URL regexes and regex functions
-const switchRegex = /(?<=\/API\?)\w*(?=={)/
+// ### URL regexes for mathSymbol and JSON object
+const switchRegex = /(?<=\/API\?).(?=={)/
 const objectRegex = /{.*}$/
-const apiUrlRegex = /.*(?=\?)/
 
 const getCommand = function (url) {
+  console.log(url)
   let command = switchRegex.exec(url)
   command = command[0]
   return command
@@ -27,33 +27,37 @@ const getCommand = function (url) {
 const getUrlJSON = function (url) {
   let urlJson = objectRegex.exec(url)
   urlJson = urlJson[0]
-  urlJson = JSON.parse(urlJson)
+  // Firefox doesn't look at input as JSON (respons header issue difficult to get right)
+  urlJson = JSON.parse(JSON.stringify(urlJson))
   return urlJson
 }
 
 // ### fetch() event listener
 self.addEventListener('fetch', function (event) {
+  let responseJson
   const request = event.request
   const url = decodeURI(request.url)
   if (url.includes('API')) {
     let command = getCommand(url)
+    console.log('### command: ' + command)
     let urlJson = getUrlJSON(url)
-    // Firefox doesn't look at input as JSON (respons header issue difficult to get right)
-    urlJson = JSON.parse(JSON.stringify(urlJson))
-    let responseJson
+    console.log('urlJson: ' + JSON.stringify(urlJson))
+    console.dir(urlJson)
+    urlJson = JSON.parse(urlJson)
 
     switch (command) {
-      case 'add':
-        responseJson = add(urlJson.firstNumber, urlJson.secondNumber)
+      case '+':
+        console.log(urlJson.num1 + ' + ' + urlJson.num2)
+        responseJson = add(urlJson.num1, urlJson.num2)
         break
-      case 'subtract':
-        responseJson = subtract(urlJson.firstNumber, urlJson.secondNumber)
+      case '-':
+        responseJson = subtract(urlJson.num1, urlJson.num2)
         break
-      case 'multiply':
-        responseJson = multiply(urlJson.firstNumber, urlJson.secondNumber)
+      case '*':
+        responseJson = multiply(urlJson.num1, urlJson.num2)
         break
-      case 'divide':
-        responseJson = divide(urlJson.firstNumber, urlJson.secondNumber)
+      case '/':
+        responseJson = divide(urlJson.num1, urlJson.num2)
         break
       default:
         // error-message into an object and returing it. To make an error-chekc in the frontend

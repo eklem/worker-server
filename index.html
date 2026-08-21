@@ -10,14 +10,14 @@
   </head>
   <body>
     <h1>Testing a simple JavaScript browser server, running inside the service worker</h1>
-    <input type="number" size="10" value="0" id="firstNumber">
+    <input type="number" size="10" value="0" id="num1">
     <select name="calculation" id="arithmeticSymbol">
-        <option value="add">+ added to</option>
-        <option value="subtract">- subtracted by</option>
-        <option value="multiply">* multiplied by</option>
-        <option value="divide">/ divide by</option>
+        <option value="+">+ added to</option>
+        <option value="-">- subtracted by</option>
+        <option value="*">* multiplied by</option>
+        <option value="/">/ divide by</option>
     </select>
-    <input type="number" size="10" value="0" id="secondNumber">
+    <input type="number" size="10" value="0" id="num2">
     <button id="calculate">Calculate!</button>
     <h2 id="result">= <span id="resultNumber"></span></h2>
     <script type="module" src="app.js"></script>

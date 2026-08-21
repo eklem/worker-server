@@ -8,25 +8,26 @@ broadcastChannel.onmessage = (message) => {
   console.log(message.data)
 }
 
-
-
 /* ### ########################################################### ### */
 /* ### Service worker registration                                 ### */
+
+
+// ### Removing index.html from pathname, if it's there
+const indexRegex = /index\.html/
+let pathname = ''
+if (indexRegex.test(window.location.pathname)) {
+  pathname = window.location.pathname.replace(indexRegex, '')    
+} else {
+  pathname = window.location.pathname
+}
 
 if ("serviceWorker" in navigator) {
 
   // Checking for index.html in pathname and removing if true
-  const indexRegex = /index\.html/
-  let windowLocationPathname = ''
   console.log(indexRegex.test(window.location.pathname))
-  if (indexRegex.test(window.location.pathname)) {
-    console.log('### ### Hello index.html')
-    windowLocationPathname = window.location.pathname.replace(indexRegex, '')    
-  } else {
-    windowLocationPathname = window.location.pathname
-  }
+
   // Register a service worker hosted at the root of the
-  navigator.serviceWorker.register(window.location.origin + windowLocationPathname + 'worker-api-server.js', { 
+  navigator.serviceWorker.register(window.location.origin + pathname + 'worker-api-server.js', { 
     type: 'module',
     scope: window.location.origin + window.location.pathname
   })
@@ -48,10 +49,11 @@ const calculateButton = document.getElementById('calculate')
 
 calculateButton.addEventListener('click', (event) => {
   const arithmeticSymbol = document.getElementById('arithmeticSymbol').value
-  const firstNumber = Number(document.getElementById('firstNumber').value)
-  const secondNumber = Number(document.getElementById('secondNumber').value)
-  console.log('calculating: ' + firstNumber + ' ' + arithmeticSymbol + ' ' + secondNumber)
-  const fetchPromise = fetch(window.location.origin + window.location.pathname + 'API?' + arithmeticSymbol + '={"firstNumber":' + firstNumber + ',"secondNumber":' + secondNumber + '}', {mode: 'cors', headers: { 'Access-Control-Allow-Origin': '*'}})
+  console.log('### Arithmetic symbol: ' + arithmeticSymbol)
+  const num1 = Number(document.getElementById('num1').value)
+  const num2 = Number(document.getElementById('num2').value)
+  console.log(num1 + ' ' + num2)
+  const fetchPromise = fetch(window.location.origin + pathname + 'API?' + arithmeticSymbol + '={"num1":' + num1 + ',"num2":' + num2 + '}', {mode: 'cors', headers: { 'Access-Control-Allow-Origin': '*'}})
   fetchPromise
     .then((response) => response.json())
     .then((data) => {
