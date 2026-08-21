@@ -55,7 +55,7 @@ calculateButton.addEventListener('click', (event) => {
   fetchPromise
     .then((response) => response.json())
     .then((data) => {
-      console.log(data)
+      console.log('response from worker-api-server: ' + JSON.stringify(data))
       // Do something with what's returned
     })
 

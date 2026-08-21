@@ -1,3 +1,5 @@
+import { add, subtract, multiply, divide } from './math-lib.js'
+
 /* ### ########################################################### ### */
 /* ### BroadcastChannel init + events                              ### */
 
@@ -8,16 +10,10 @@ broadcastChannel.onmessage = (message) => {
   console.log(message.data)
 }
 
-broadcastChannel.onmessageerror = (error) => {
-  console.log('onMessageError: something happened:')
-  console.log(error)
-}
-
 /* ### ########################################################### ### */
 /* ### Fetch event listener + control switch                       ### */
 
-/* ### ########################################################### ### */
-/* ### URL regexes for control switch                              ### */
+// ### URL regexes and regex functions
 const switchRegex = /(?<=\/API\?)\w*(?=={)/
 const objectRegex = /{.*}$/
 const apiUrlRegex = /.*(?=\?)/
@@ -35,60 +31,45 @@ const getUrlJSON = function (url) {
   return urlJson
 }
 
-const getApiUrl = function (url) {
-  const apiUrl = apiUrlRegex.exec(url)
-  console.log('### ######### API URL: ' + apiUrl)
-  return apiUrl
-}
-
+// ### fetch() event listener
 self.addEventListener('fetch', function (event) {
-  console.dir(event.request)
   const request = event.request
   const url = decodeURI(request.url)
   if (url.includes('API')) {
     let command = getCommand(url)
     let urlJson = getUrlJSON(url)
-    let apiUrl = getApiUrl(url)
-    let responseJson = { type: 'result', answer: null }
-    console.log('### Command: ' + command)
-    console.log('### UrlJson: ' + urlJson)
-    console.log('###  apiUrl: ' + apiUrl)
-    console.log('### sw.js: fetch eventlistener: ' + url)
+    // Firefox doesn't look at input as JSON (respons header issue difficult to get right)
+    urlJson = JSON.parse(JSON.stringify(urlJson))
+    let responseJson
+
     switch (command) {
       case 'add':
-        console.log('### Service Worker ADD')
-        if (typeof urlJson === 'object') {
-          const answer = urlJson.firstNumber + urlJson.secondNumber
-          responseJson = { type: 'result', math: urlJson, answer: answer  }
-        } else {
-          responseJson = { type: 'error', message: 'Not an object.'}
-        }
-        console.log(responseJson)
+        responseJson = add(urlJson.firstNumber, urlJson.secondNumber)
         break
       case 'subtract':
-        broadcastChannel.postMessage('### sw -> app: subtract')
+        responseJson = subtract(urlJson.firstNumber, urlJson.secondNumber)
         break
       case 'multiply':
-        broadcastChannel.postMessage('### sw -> app: multiply')
+        responseJson = multiply(urlJson.firstNumber, urlJson.secondNumber)
         break
       case 'divide':
-        broadcastChannel.postMessage('### sw -> app: divide')
+        responseJson = divide(urlJson.firstNumber, urlJson.secondNumber)
         break
       default:
         // error-message into an object and returing it. To make an error-chekc in the frontend
-        console.log('Error: Not a known command or query-part of the URL')
+        console.log('### Servide Worker ERROR')
+        responseJson = { type: 'error', message: 'Error: Not a known command or query-part of the URL' }
     }
 
-    // ### Responding 
+    // ### Response back to app.js
     event.respondWith(
       (async () => {
         let responseHeaders = new Headers({
           'Content-Type': 'application/json; charset=UTF-8'
         })
-        console.log(responseHeaders.get('Content-Type'))
         // Just returning a JSON object without hitting the server
         return new Response (JSON.stringify(responseJson), { url: './API', responseHeaders })
-      })(),
+      })(2000),
     )
   }
 })
