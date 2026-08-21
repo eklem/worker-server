@@ -14,12 +14,14 @@ broadcastChannel.onmessage = (message) => {
 /* ### Service worker registration                                 ### */
 
 if ("serviceWorker" in navigator) {
+
+  // Checking for index.html in pathname and removing if true
   const indexRegex = /index\.html/
-  let windowsLocationPathname = ''
+  let windowLocationPathname = ''
   console.log(indexRegex.test(window.location.pathname))
   if (indexRegex.test(window.location.pathname)) {
     console.log('### ### Hello index.html')
-    windowsLocationPathname = window.location.pathname.replace(indexRegex, '')    
+    windowLocationPathname = window.location.pathname.replace(indexRegex, '')    
   } else {
     windowLocationPathname = window.location.pathname
   }
