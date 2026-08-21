@@ -5,7 +5,7 @@
   "start_url": "./index.html",
   "background_color": "#ffffff",
   "display": "standalone",
-  "scope": "/worker-api-server/",
+  "scope": "https://eklem.github.io/worker-api-server/",
   "icons": [
     {
       "src": "./img/icon-192x192.png",
