@@ -49,13 +49,21 @@ self.addEventListener('fetch', function (event) {
     let command = getCommand(url)
     let urlJson = getUrlJSON(url)
     let apiUrl = getApiUrl(url)
+    let responseJson = { type: 'result', answer: null }
     console.log('### Command: ' + command)
-    console.log('### UrlJson: ' + JSON.stringify(urlJson))
+    console.log('### UrlJson: ' + urlJson)
     console.log('###  apiUrl: ' + apiUrl)
     console.log('### sw.js: fetch eventlistener: ' + url)
     switch (command) {
       case 'add':
-        broadcastChannel.postMessage('### sw -> app: add')
+        console.log('### Service Worker ADD')
+        if (typeof urlJson === 'object') {
+          const answer = urlJson.firstNumber + urlJson.secondNumber
+          responseJson = { type: 'result', math: urlJson, answer: answer  }
+        } else {
+          responseJson = { type: 'error', message: 'Not an object.'}
+        }
+        console.log(responseJson)
         break
       case 'subtract':
         broadcastChannel.postMessage('### sw -> app: subtract')
@@ -67,7 +75,8 @@ self.addEventListener('fetch', function (event) {
         broadcastChannel.postMessage('### sw -> app: divide')
         break
       default:
-        console.log('Andre kommandoer');
+        // error-message into an object and returing it. To make an error-chekc in the frontend
+        console.log('Error: Not a known command or query-part of the URL')
     }
 
     // ### Responding 
@@ -78,7 +87,7 @@ self.addEventListener('fetch', function (event) {
         })
         console.log(responseHeaders.get('Content-Type'))
         // Just returning a JSON object without hitting the server
-        return new Response (JSON.stringify(urlJson), { url: './API', responseHeaders })
+        return new Response (JSON.stringify(responseJson), { url: './API', responseHeaders })
       })(),
     )
   }

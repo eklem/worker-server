@@ -8,17 +8,23 @@ broadcastChannel.onmessage = (message) => {
   console.log(message.data)
 }
 
-broadcastChannel.onmessageerror = (error) => {
-  console.log('onMessageError: something happened:')
-  console.log(error)
-}
+
 
 /* ### ########################################################### ### */
 /* ### Service worker registration                                 ### */
 
 if ("serviceWorker" in navigator) {
+  const indexRegex = /index\.html/
+  let windowsLocationPathname = ''
+  console.log(indexRegex.test(window.location.pathname))
+  if (indexRegex.test(window.location.pathname)) {
+    console.log('### ### Hello index.html')
+    windowsLocationPathname = window.location.pathname.replace(indexRegex, '')    
+  } else {
+    windowLocationPathname = window.location.pathname
+  }
   // Register a service worker hosted at the root of the
-  navigator.serviceWorker.register(window.location.origin + window.location.pathname + 'worker-api-server.js', { 
+  navigator.serviceWorker.register(window.location.origin + windowLocationPathname + 'worker-api-server.js', { 
     type: 'module',
     scope: window.location.origin + window.location.pathname
   })
