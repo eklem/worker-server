@@ -2,7 +2,7 @@
   "short_name": "worker-server",
   "name": "worker-server",
   "description": "JavaScript service worker as a server",
-  "start_url": "./",
+  "start_url": "./index.html",
   "background_color": "#ffffff",
   "display": "standalone",
   "scope": "/worker-api-server/",
