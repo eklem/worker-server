@@ -28,7 +28,7 @@ const getUrlJSON = function (url) {
   let urlJson = objectRegex.exec(url)
   urlJson = urlJson[0]
   // Firefox doesn't look at input as JSON (respons header issue difficult to get right)
-  urlJson = JSON.parse(JSON.stringify(urlJson))
+  if (urlJson !== 'object') { urlJson = JSON.parse(urlJson) }
   return urlJson
 }
 
@@ -43,7 +43,6 @@ self.addEventListener('fetch', function (event) {
     let urlJson = getUrlJSON(url)
     console.log('urlJson: ' + JSON.stringify(urlJson))
     console.dir(urlJson)
-    urlJson = JSON.parse(urlJson)
 
     switch (command) {
       case '+':

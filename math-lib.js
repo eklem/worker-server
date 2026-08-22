@@ -3,31 +3,30 @@
 
 let responseJson = {
   type: 'result',
-  mathSymbol: null,
   answer: null
 }
 
 const add = function (num1, num2) {
   const answer = num1 + num2
-  responseJson = { answer: answer, mathSymbol: '+' }
+  responseJson = { answer: answer }
   return responseJson
 }
 
 const subtract = function (num1, num2) {
   const answer = num1 - num2
-  responseJson = { answer: answer, mathSymbol: '-' }
+  responseJson = { answer: answer }
   return responseJson
 }
 
 const multiply = function (num1, num2) {
   const answer = num1 * num2
-  responseJson = { answer: answer, mathSymbol: '*' }
+  responseJson = { answer: answer }
   return responseJson
 }
 
 const divide = function (num1, num2) {
   const answer = num1 / num2
-  responseJson = { answer: answer, mathSymbol: '/' }
+  responseJson = { answer: answer }
   return responseJson
 }
 
