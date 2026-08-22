@@ -33,6 +33,8 @@ fetch(./API?command={someDataObject})
 
 A service worker that intercepts requests to an `API`-file. Then extracts the command and JSON from the URL, do stuff with it and return some JSON to the frontend.
 
+A switch statement with a case for each command extracted from the URL.
+
 For tasks taking a long time, the worker-server will use postMessage over a broadcastChannel to message the app.js about progress. 
 
 ### API
