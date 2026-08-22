@@ -1,12 +1,50 @@
-# worker-api
-JavaScript service worker as a server API. Example library on how it can be done. 
+# worker-server
+JavaScript service worker as a server. Example library on how it can be done. 
 
 Advantages:
 
-* Having a JavaScript server in your browser, doing the heavy lifting and not being in the way of the frontend JavaScript since it's running in a separate thread.
-* You can create a server based on a JavaScript library and make it easy for others to include it in their project.
+* Having a JavaScript server in your browser
+* Easy to maintain
+* Create a server that others easily can plug in to their project
+* Only static files needed, perfect for i.e. GitHub Pages.
 
-**app -> service-worker communication:**
+## Files and their function
+
+### index.html
+
+THe HTML for your web app. Static file (All files are static).
+
+### app.js
+
+Frontend code and initiator of the worker-server (a service worker). Communicates with the service worker by:
+
+**Request:**
+
+```javascript
+fetch(./API?command={someDataObject})
+```
+
+**Response:**
+```json
+{"key": "val"}
+```
+
+### worker-server.js
+
+A service worker that intercepts requests to an `API`-file. Then extracts the command and JSON from the URL, do stuff with it and return some JSON to the frontend.
+
+For tasks taking a long time, the worker-server will use postMessage over a broadcastChannel to message the app.js about progress. 
+
+### API
+
+Actually not needed. If you request this file with a fetch(), the worker-server.js will intercept the request and return an adequate response.
+
+### mat-lib.js
+
+Just an example code library. This will be the main library you want do do some heavy lifting with. Import in `worker-server.js` and call the functions you need when you get a command and data from the frontend.
+
+
+## Old stuff, reformatting needed
 
 ```javascript
 fetch(.someFileInScope?message={messageObjetc})
