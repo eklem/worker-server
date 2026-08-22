@@ -39,7 +39,11 @@ For tasks taking a long time, the worker-server will use postMessage over a broa
 
 ### API
 
-Actually not needed. If you request this file with a fetch(), the worker-server.js will intercept the request and return an adequate response.
+Actually not needed, not even an empty file. If you request this file with a fetch(), the worker-server.js will intercept the request and return an adequate response.
+
+### manifest.webmanifest
+
+Manifest file. Main function is to make the web app installable on desktops and smartphones.
 
 ### mat-lib.js
 
