@@ -4,7 +4,7 @@ JavaScript service worker as a server. Example library on how it can be done.
 Advantages:
 
 * Having a JavaScript server in your browser
-* Easy to maintain
+* Easy to maintain. Browser updates fixes most issues
 * Create a server that others easily can plug in to their project
 * Only static files needed, perfect for i.e. GitHub Pages.
 
