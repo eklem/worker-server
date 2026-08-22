@@ -1,0 +1,26 @@
+{
+  "name": "worker-server",
+  "version": "0.0.1",
+  "description": "JavaScript service worker as a server. Example library on how it can be done.",
+  "keywords": [
+    "JavaScript",
+    "browser",
+    "server",
+    "development"
+  ],
+  "homepage": "https://github.com/eklem/worker-server#readme",
+  "bugs": {
+    "url": "https://github.com/eklem/worker-server/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/eklem/worker-server.git"
+  },
+  "license": "MIT",
+  "author": "Espen Klem",
+  "type": "module",
+  "main": "index.html",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  }
+}
