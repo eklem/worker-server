@@ -1,5 +1,5 @@
-# worker-api-server
-JavaScript service worker as an API server. Example library on how it can be done. 
+# worker-api
+JavaScript service worker as a server API. Example library on how it can be done. 
 
 Advantages:
 

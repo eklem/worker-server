@@ -13,58 +13,53 @@ broadcastChannel.onmessage = (message) => {
 /* ### ########################################################### ### */
 /* ### Fetch event listener + control switch                       ### */
 
-// ### URL regexes for mathSymbol and JSON object
-const switchRegex = /(?<=\/API\?).(?=={)/
-const objectRegex = /{.*}$/
 
-const getCommand = function (url) {
-  console.log(url)
-  let command = switchRegex.exec(url)
-  command = command[0]
-  return command
+// ### Url parts extraction                                        ### */
+const regexUrl = function (url) {
+  let urlParts = {
+    query: null,
+    json: null
+  }
+
+  const queryRegex = /(?<=\/API\?).(?=={)/
+  const jsonRegex = /{.*}$/
+  
+  urlParts.query = queryRegex.exec(url)
+  urlParts.query = urlParts.query[0]
+  urlParts.json = jsonRegex.exec(url)
+  urlParts.json = urlParts.json[0]
+  if (urlParts.json !== 'object') { urlParts.json = JSON.parse(urlParts.json) }
+  
+  return urlParts
 }
 
-const getUrlJSON = function (url) {
-  let urlJson = objectRegex.exec(url)
-  urlJson = urlJson[0]
-  // Firefox doesn't look at input as JSON (respons header issue difficult to get right)
-  if (urlJson !== 'object') { urlJson = JSON.parse(urlJson) }
-  return urlJson
-}
-
-// ### fetch() event listener
+// ### fetch() event listener                                      ### */
 self.addEventListener('fetch', function (event) {
   let responseJson
-  const request = event.request
-  const url = decodeURI(request.url)
-  if (url.includes('API')) {
-    let command = getCommand(url)
-    console.log('### command: ' + command)
-    let urlJson = getUrlJSON(url)
-    console.log('urlJson: ' + JSON.stringify(urlJson))
-    console.dir(urlJson)
-
-    switch (command) {
+  // const url = decodeURI(eventrequest.url)
+  if (decodeURI(event.request.url).includes('API')) {
+    let urlParts = regexUrl(decodeURI(event.request.url))
+    switch (urlParts.query) {
       case '+':
-        console.log(urlJson.num1 + ' + ' + urlJson.num2)
-        responseJson = add(urlJson.num1, urlJson.num2)
+        console.log(urlParts.json.num1 + ' + ' + urlParts.json.num2)
+        responseJson = add(urlParts.json.num1, urlParts.json.num2)
         break
       case '-':
-        responseJson = subtract(urlJson.num1, urlJson.num2)
+        responseJson = subtract(urlParts.json.num1, urlParts.json.num2)
         break
       case '*':
-        responseJson = multiply(urlJson.num1, urlJson.num2)
+        responseJson = multiply(urlParts.json.num1, urlParts.json.num2)
         break
       case '/':
-        responseJson = divide(urlJson.num1, urlJson.num2)
+        responseJson = divide(urlParts.json.num1, urlParts.json.num2)
         break
       default:
         // error-message into an object and returing it. To make an error-chekc in the frontend
         console.log('### Servide Worker ERROR')
-        responseJson = { type: 'error', message: 'Error: Not a known command or query-part of the URL' }
+        responseJson = { type: 'error', message: 'Error: Not a known query-part in the URL' }
     }
 
-    // ### Response back to app.js
+    // ### Response back to app.js                                 ### */
     event.respondWith(
       (async () => {
         let responseHeaders = new Headers({
