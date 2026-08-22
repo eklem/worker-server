@@ -1,7 +1,7 @@
 import { add, subtract, multiply, divide } from './math-lib.js'
 
-/* ### ########################################################### ### */
-/* ### BroadcastChannel init + events                              ### */
+/* ### ################################################################# ### */
+/* ### BroadcastChannel init + event listener                            ### */
 
 const broadcastChannel = new BroadcastChannel('workerserver_app')
 
@@ -10,11 +10,11 @@ broadcastChannel.onmessage = (message) => {
   console.log(message.data)
 }
 
-/* ### ########################################################### ### */
-/* ### Fetch event listener + control switch                       ### */
+/* ### ################################################################# ### */
+/* ### Fetch event listener + control switch                             ### */
 
 
-// ### Url parts extraction                                        ### */
+// ### Url parts extraction                                              ### */
 const regexUrl = function (url) {
   let urlParts = {
     query: null,
@@ -33,7 +33,7 @@ const regexUrl = function (url) {
   return urlParts
 }
 
-// ### fetch() event listener                                      ### */
+// ### fetch() event listener                                            ### */
 self.addEventListener('fetch', function (event) {
   let responseJson
   // const url = decodeURI(eventrequest.url)
@@ -59,7 +59,7 @@ self.addEventListener('fetch', function (event) {
         responseJson = { type: 'error', message: 'Error: Not a known query-part in the URL' }
     }
 
-    // ### Response back to app.js                                 ### */
+    // ### Response back to app.js                                       ### */
     event.respondWith(
       (async () => {
         let responseHeaders = new Headers({

@@ -1,5 +1,5 @@
-/* ### ########################################################### ### */
-/* ### BroadcastChannel init + events                              ### */
+/* ### ################################################################# ### */
+/* ### BroadcastChannel init + events                                    ### */
 
 const broadcastChannel = new BroadcastChannel('workerserver_app')
 
@@ -8,25 +8,17 @@ broadcastChannel.onmessage = (message) => {
   console.log(message.data)
 }
 
-/* ### ########################################################### ### */
-/* ### Service worker registration                                 ### */
-
-
-// ### Removing index.html from pathname, if it's there
-const indexRegex = /index\.html/
-let pathname = ''
-if (indexRegex.test(window.location.pathname)) {
-  pathname = window.location.pathname.replace(indexRegex, '')    
-} else {
-  pathname = window.location.pathname
-}
+/* ### ################################################################# ### */
+/* ### Service worker registration                                       ### */
 
 if ("serviceWorker" in navigator) {
 
-  // Checking for index.html in pathname and removing if true
-  console.log(indexRegex.test(window.location.pathname))
+  // ### Removing index.html if it's present in .pathname
+  const indexRegex = /index\.html/
+  let pathname = ''
+  pathname = window.location.pathname.replace(indexRegex, '')    
 
-  // Register a service worker hosted at the root of the
+  // ### Register a service worker
   navigator.serviceWorker.register(window.location.origin + pathname + 'worker-api-server.js', { 
     type: 'module',
     scope: window.location.origin + window.location.pathname
@@ -43,10 +35,13 @@ if ("serviceWorker" in navigator) {
   console.error("Service workers are not supported.")
 }
 
-
 /* ### Calculate button action */
-const calculateButton = document.getElementById('calculate')
+/* ### ################################################################# ### */
+/* ### A: Listen to button clicked                                       ### */
+/* ### B: fetch()-request data to worker-api                             ### */
+/* ### C: handle response json from fetch()-request                      ### */
 
+const calculateButton = document.getElementById('calculate')
 calculateButton.addEventListener('click', (event) => {
   const arithmeticSymbol = document.getElementById('arithmeticSymbol').value
   console.log('### Arithmetic symbol: ' + arithmeticSymbol)
