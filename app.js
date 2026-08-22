@@ -11,13 +11,12 @@ broadcastChannel.onmessage = (message) => {
 /* ### ################################################################# ### */
 /* ### Service worker registration                                       ### */
 
+// ### Removing index.html if it's present in .pathname
+const indexRegex = /index\.html/
+let pathname = ''
+pathname = window.location.pathname.replace(indexRegex, '') 
+
 if ("serviceWorker" in navigator) {
-
-  // ### Removing index.html if it's present in .pathname
-  const indexRegex = /index\.html/
-  let pathname = ''
-  pathname = window.location.pathname.replace(indexRegex, '')    
-
   // ### Register a service worker
   navigator.serviceWorker.register(window.location.origin + pathname + 'worker-api-server.js', { 
     type: 'module',
@@ -55,5 +54,4 @@ calculateButton.addEventListener('click', (event) => {
       console.log('response from worker-api-server: ' + JSON.stringify(data))
       // Do something with what's returned
     })
-
 })
