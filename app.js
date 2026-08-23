@@ -34,7 +34,19 @@ if ("serviceWorker" in navigator) {
   console.error("Service workers are not supported.")
 }
 
-/* ### Calculate button action */
+/* ### ################################################################# ### */
+/* ### Creating HTML to add to document                                  ### */
+
+const populateHTML = function (nodeObject) {
+  console.log('Populating HTML')
+  const result = document.getElementById('result')
+  const p = document.createElement('p')
+  p.setAttribute('id', 'result');
+  const pContent = document.createTextNode(nodeObject.mathProblem + nodeObject.answer)
+  p.appendChild(pContent)
+  result.replaceWith(p)
+}
+
 /* ### ################################################################# ### */
 /* ### A: Listen to button clicked                                       ### */
 /* ### B: fetch()-request data to worker-api                             ### */
@@ -53,5 +65,6 @@ calculateButton.addEventListener('click', (event) => {
     .then((data) => {
       console.log('response from worker-api-server: ' + JSON.stringify(data))
       // Do something with what's returned
+      populateHTML(data)
     })
 })
