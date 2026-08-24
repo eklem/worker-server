@@ -37,9 +37,11 @@ A switch statement with a case for each command extracted from the URL.
 
 For tasks taking a long time, the worker-server will use postMessage over a broadcastChannel to message the app.js about progress. 
 
+***[worker-server-example]()**
+
 ### API
 
-Actually not needed, not even an empty file. If you request this file with a fetch(), the worker-server.js will intercept the request and return an adequate response.
+Actually not needed, not even an empty file. If you request this file with a fetch(), the worker-server.js will intercept the request and return a response as if it comes from the non-existing API-file.
 
 ### manifest.webmanifest
 
