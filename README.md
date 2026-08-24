@@ -8,6 +8,8 @@ Advantages:
 * Create a server that others easily can plug in to their project
 * Only static files needed, perfect for i.e. GitHub Pages.
 
+**[worker-server-example]()**
+
 ## Files and their function
 
 ### index.html
@@ -36,8 +38,6 @@ A service worker that intercepts requests to an `API`-file. Then extracts the co
 A switch statement with a case for each command extracted from the URL.
 
 For tasks taking a long time, the worker-server will use postMessage over a broadcastChannel to message the app.js about progress. 
-
-***[worker-server-example]()**
 
 ### API
 
