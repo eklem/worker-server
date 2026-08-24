@@ -11,6 +11,13 @@ broadcastChannel.onmessage = (message) => {
 }
 
 /* ### ################################################################# ### */
+/* ### Sets the service worker in controll of all clients                ### */
+
+self.addEventListener("activate", (event) => {
+  event.waitUntil(clients.claim())
+})
+
+/* ### ################################################################# ### */
 /* ### Fetch event listener + control switch                             ### */
 
 
@@ -63,11 +70,13 @@ self.addEventListener('fetch', function (event) {
     event.respondWith(
       (async () => {
         let responseHeaders = new Headers({
-          'Content-Type': 'application/json; charset=UTF-8'
+          'Content-Type': 'application/json',
+          'mode': 'cors'
         })
         // Just returning a JSON object without hitting the server
+        console.log('### response JSON: ' + JSON.stringify(responseJson))
         return new Response (JSON.stringify(responseJson), { url: './API', responseHeaders })
-      })(2000),
+      })(),
     )
   }
 })
