@@ -28,7 +28,7 @@ const regexUrl = function (url) {
     json: null
   }
 
-  const queryRegex = /(?<=\/API\?).(?=={)/
+  const queryRegex = /(?<=\/API\?)\w*(?=={)/
   const jsonRegex = /{.*}$/
   
   urlParts.query = queryRegex.exec(url)
@@ -47,22 +47,22 @@ self.addEventListener('fetch', function (event) {
   if (decodeURI(event.request.url).includes('API')) {
     let urlParts = regexUrl(decodeURI(event.request.url))
     switch (urlParts.query) {
-      case '+':
+      case 'add':
         console.log(urlParts.json.num1 + ' + ' + urlParts.json.num2)
         responseJson = add(urlParts.json.num1, urlParts.json.num2)
         break
-      case '-':
+      case 'subtract':
         responseJson = subtract(urlParts.json.num1, urlParts.json.num2)
         break
-      case '*':
+      case 'multiply':
         responseJson = multiply(urlParts.json.num1, urlParts.json.num2)
         break
-      case '/':
+      case 'divide':
         responseJson = divide(urlParts.json.num1, urlParts.json.num2)
         break
       default:
         // error-message into an object and returing it. To make an error-chekc in the frontend
-        console.log('### Servide Worker ERROR')
+        console.log('### Servide Worker error')
         responseJson = { type: 'error', message: 'Error: Not a known query-part in the URL' }
     }
 
