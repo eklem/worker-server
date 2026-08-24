@@ -63,8 +63,12 @@ calculateButton.addEventListener('click', (event) => {
   fetchPromise
     .then((response) => response.json())
     .then((data) => {
+      console.dir(data)
       console.log('### response from worker-api-server: ' + JSON.stringify(data))
       // Do something with what's returned
       populateHTML(data)
+    })
+    .catch((error) => {
+      console.error(`onRejected function called: ${error.message}`)
     })
 })

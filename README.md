@@ -26,7 +26,7 @@ fetch(./API?command={someDataObject})
 
 **Response:**
 ```json
-{"key": "val"}
+{<JSON object>>}
 ```
 
 ### worker-server.js

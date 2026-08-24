@@ -28,13 +28,14 @@ const regexUrl = function (url) {
     json: null
   }
 
-  const queryRegex = /(?<=\/API\?)\w*(?=={)/
+  const queryRegex = /(?<=\/API\?).*(?=={)/
   const jsonRegex = /{.*}$/
   
   urlParts.query = queryRegex.exec(url)
   urlParts.query = urlParts.query[0]
   urlParts.json = jsonRegex.exec(url)
   urlParts.json = urlParts.json[0]
+  console.dir(urlParts)
   if (urlParts.json !== 'object') { urlParts.json = JSON.parse(urlParts.json) }
   
   return urlParts
@@ -48,7 +49,6 @@ self.addEventListener('fetch', function (event) {
     let urlParts = regexUrl(decodeURI(event.request.url))
     switch (urlParts.query) {
       case 'add':
-        console.log(urlParts.json.num1 + ' + ' + urlParts.json.num2)
         responseJson = add(urlParts.json.num1, urlParts.json.num2)
         break
       case 'subtract':
@@ -71,6 +71,7 @@ self.addEventListener('fetch', function (event) {
       (async () => {
         let responseHeaders = new Headers({
           'Content-Type': 'application/json',
+          'Access-Control-Allow-Origin': '*',
           'mode': 'cors'
         })
         // Just returning a JSON object without hitting the server
