@@ -8,7 +8,7 @@ Advantages:
 * Create a server that others easily can plug in to their project
 * Only static files needed, perfect for i.e. GitHub Pages.
 
-**[worker-server-example]()**
+**[worker-server-example](https://eklem.github.io/worker-server/)**
 
 ## Files and their function
 
