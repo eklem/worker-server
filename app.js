@@ -20,7 +20,7 @@ pathname = window.location.pathname.replace(indexRegex, '')
 
 if ("serviceWorker" in navigator) {
   // ### Register a service worker
-  navigator.serviceWorker.register(window.location.origin + pathname + 'worker-api-server.js', { 
+  navigator.serviceWorker.register(window.location.origin + pathname + 'webpage-server.js', { 
     type: 'module',
     scope: window.location.origin + window.location.pathname
   })
@@ -59,11 +59,13 @@ calculateButton.addEventListener('click', (event) => {
   const arithmeticSymbol = document.getElementById('arithmeticSymbol').value
   const num1 = Number(document.getElementById('num1').value)
   const num2 = Number(document.getElementById('num2').value)
-  const fetchPromise = fetch(encodeURI(window.location.origin + pathname + 'API?' + arithmeticSymbol + '={"num1":' + num1 + ',"num2":' + num2 + '}', {mode: 'cors', headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*'}}))
+  const fetchPromise = fetch(encodeURI(window.location.origin + pathname + 'API?' + arithmeticSymbol + '={"num1":' + num1 + ',"num2":' + num2 + '}'))
   fetchPromise
     .then((response) => {
       const contentType = response.headers.get('content-type')
       console.log('### ### response content-type seen in app: ' + contentType)
+      console.dir(response)
+      console.log(response.headers)
       return response.json()
     })
     .then((data) => {

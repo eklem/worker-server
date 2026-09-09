@@ -1,5 +1,5 @@
-# worker-server
-JavaScript service worker as a server. Example library on how it can be done. 
+# webpage-server
+JavaScript service worker as a server for your webpage. Example library on how it can be done. 
 
 Advantages:
 
@@ -8,7 +8,7 @@ Advantages:
 * Create a server that others easily can plug in to their project
 * Only static files needed, perfect for i.e. GitHub Pages.
 
-**[worker-server-example](https://eklem.github.io/worker-server/)**
+**[webpage-server-example](https://eklem.github.io/webpage-server/)**
 
 ## Files and their function
 
@@ -18,7 +18,7 @@ THe HTML for your web app. Static file (All files are static).
 
 ### app.js
 
-Frontend code and initiator of the worker-server (a service worker). Communicates with the service worker by:
+Frontend code and initiator of the webpage-server (a service worker). Communicates with the service worker by:
 
 **Request:**
 
@@ -31,17 +31,17 @@ fetch(./API?command={someDataObject})
 {<JSON object>}
 ```
 
-### worker-server.js
+### webpage-server.js
 
 A service worker that intercepts requests to an `API`-file. Then extracts the command and JSON from the URL, do stuff with it and return some JSON to the frontend.
 
 A switch statement with a case for each command extracted from the URL.
 
-For tasks taking a long time, the worker-server will use postMessage over a broadcastChannel to message the app.js about progress. 
+For tasks taking a long time, the webpage-server will use postMessage over a broadcastChannel to message the app.js about progress. 
 
 ### API
 
-Actually not needed, not even an empty file. If you request this file with a fetch(), the worker-server.js will intercept the request and return a response as if it comes from the non-existing API-file.
+Actually not needed, not even an empty file. If you request this file with a fetch(), the webpage-server.js will intercept the request and return a response as if it comes from the non-existing API-file.
 
 ### manifest.webmanifest
 
@@ -49,7 +49,7 @@ Manifest file. Main function is to make the web app installable on desktops and 
 
 ### mat-lib.js
 
-Just an example code library. This will be the main library you want do do some heavy lifting with. Import in `worker-server.js` and call the functions you need when you get a command and data from the frontend.
+Just an example code library. This will be the main library you want do do some heavy lifting with. Import in `webpage-server.js` and call the functions you need when you get a command and data from the frontend.
 
 
 ## Old stuff, reformatting needed
@@ -68,7 +68,7 @@ self.addEventListener('fetch', function (event) {
 })
 ```
 
- **service-worker->app:**
+ **service-worker -> app:**
  ```javascript
 const broadcast = new BroadcastChannel('sw_app_serviceworker)
 broadcast.postMessage({messageObject})

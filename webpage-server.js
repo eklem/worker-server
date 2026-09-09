@@ -47,7 +47,7 @@ const regexUrl = function (url) {
 
 // ### fetch() event listener                                            ### */
 self.addEventListener('fetch', function (event) {
-  console.log('### fetch event listener')
+  console.log('### fetch event listener triggered')
   console.dir(event.request)
   let responseJson
   // const url = decodeURI(eventrequest.url)
@@ -78,16 +78,15 @@ self.addEventListener('fetch', function (event) {
     // ### Response back to app.js                                       ### */
     event.respondWith(
       (async () => {
-        let responseHeaders = new Headers({options: {
-          'Content-Type': 'application/json',
-          'Access-Control-Allow-Origin': '*',
-          'stauts': 202,
-          'mode': 'no-cors',
-        }})
-        console.dir(responseHeaders)
+        let responseOptions =  {
+          headers: {'Content-Type': 'application/json'},
+          status: 200
+        }
+        console.log('### ### response headers')
+        console.dir(responseOptions)
         // Just returning a JSON object without hitting the server
         console.log('### response JSON: ' + JSON.stringify(responseJson))
-        return new Response (JSON.stringify(responseJson), { url: './API', responseHeaders })
+        return new Response (JSON.stringify(responseJson), responseOptions)
       })(),
     )
   }

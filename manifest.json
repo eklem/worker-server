@@ -1,11 +1,11 @@
 {
-  "short_name": "worker-server",
-  "name": "worker-server",
-  "description": "JavaScript service worker as a server",
+  "short_name": "webpage-server",
+  "name": "webpage-server",
+  "description": "JavaScript service worker as a server for your webpage",
   "start_url": "./index.html",
   "background_color": "#ffffff",
   "display": "fullscreen",
-  "scope": "https://eklem.github.io/worker-server/",
+  "scope": "https://eklem.github.io/webpage-server/",
   "icons": [
     {
       "src": "./img/icon-192x192.png",
