@@ -59,9 +59,13 @@ calculateButton.addEventListener('click', (event) => {
   const arithmeticSymbol = document.getElementById('arithmeticSymbol').value
   const num1 = Number(document.getElementById('num1').value)
   const num2 = Number(document.getElementById('num2').value)
-  const fetchPromise = fetch(window.location.origin + pathname + 'API?' + arithmeticSymbol + '={"num1":' + num1 + ',"num2":' + num2 + '}', {mode: 'cors', headers: { 'Access-Control-Allow-Origin': '*'}})
+  const fetchPromise = fetch(encodeURI(window.location.origin + pathname + 'API?' + arithmeticSymbol + '={"num1":' + num1 + ',"num2":' + num2 + '}', {mode: 'cors', headers: { 'Content-Type': 'application/json'}}))
   fetchPromise
-    .then((response) => response.json())
+    .then((response) => {
+      const contentType = response.headers.get('content-type')
+      console.log('### ### response content-type seen in app: ' + contentType)
+      return response.json()
+    })
     .then((data) => {
       console.dir(data)
       console.log('### response from worker-api-server: ' + JSON.stringify(data))

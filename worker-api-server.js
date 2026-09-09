@@ -35,14 +35,20 @@ const regexUrl = function (url) {
   urlParts.query = urlParts.query[0]
   urlParts.json = jsonRegex.exec(url)
   urlParts.json = urlParts.json[0]
+  console.log('### urlParts:')
   console.dir(urlParts)
-  if (urlParts.json !== 'object') { urlParts.json = JSON.parse(urlParts.json) }
+  if (urlParts.json !== 'object') { 
+    console.log('urlParts.json: ' + urlParts.json)
+    urlParts.json = JSON.parse(urlParts.json)
+  }
   
   return urlParts
 }
 
 // ### fetch() event listener                                            ### */
 self.addEventListener('fetch', function (event) {
+  console.log('### fetch event listener')
+  console.dir(event.request)
   let responseJson
   // const url = decodeURI(eventrequest.url)
   if (decodeURI(event.request.url).includes('API')) {
@@ -66,14 +72,19 @@ self.addEventListener('fetch', function (event) {
         responseJson = { type: 'error', message: 'Error: Not a known query-part in the URL' }
     }
 
+    const contentType = event.request.headers.get('content-type')
+    console.log('### ### request content-type seen in sw: ' + contentType)
+
     // ### Response back to app.js                                       ### */
     event.respondWith(
       (async () => {
-        let responseHeaders = new Headers({
+        let responseHeaders = new Headers({options: {
           'Content-Type': 'application/json',
           'Access-Control-Allow-Origin': '*',
-          'mode': 'cors'
-        })
+          'stauts': 202,
+          'mode': 'no-cors',
+        }})
+        console.dir(responseHeaders)
         // Just returning a JSON object without hitting the server
         console.log('### response JSON: ' + JSON.stringify(responseJson))
         return new Response (JSON.stringify(responseJson), { url: './API', responseHeaders })
