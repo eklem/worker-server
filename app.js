@@ -59,7 +59,7 @@ calculateButton.addEventListener('click', (event) => {
   const arithmeticSymbol = document.getElementById('arithmeticSymbol').value
   const num1 = Number(document.getElementById('num1').value)
   const num2 = Number(document.getElementById('num2').value)
-  const fetchPromise = fetch(encodeURI(window.location.origin + pathname + 'API?' + arithmeticSymbol + '={"num1":' + num1 + ',"num2":' + num2 + '}', {mode: 'cors', headers: { 'Content-Type': 'application/json'}}))
+  const fetchPromise = fetch(encodeURI(window.location.origin + pathname + 'API?' + arithmeticSymbol + '={"num1":' + num1 + ',"num2":' + num2 + '}', {mode: 'cors', headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*'}}))
   fetchPromise
     .then((response) => {
       const contentType = response.headers.get('content-type')
