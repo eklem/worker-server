@@ -76,4 +76,4 @@ broadcast.postMessage({messageObject})
 
 ## WIP
 
-Will use what I figure out in [Stortinget-repository](https://github.om/eklem/stortinget/), more specifically [fetch(./minimalFile?someApiCall{...}) from app.js](https://github.com/eklem/stortinget/issues/67). I need to se if I can cache `someFileInScipe` even if it has parameters attatched through `?message={messageObject}`
+Will use what I figure out in [Stortinget-repository](https://github.om/eklem/stortinget/), more specifically [fetch(./minimalFile?someApiCall{...}) from app.js](https://github.com/eklem/stortinget/issues/67).
