@@ -40,7 +40,6 @@ if ("serviceWorker" in navigator) {
 /* ### Creating HTML to add to document                                  ### */
 
 const populateHTML = function (nodeObject) {
-  console.log('Populating HTML')
   const result = document.getElementById('result')
   const p = document.createElement('p')
   p.setAttribute('id', 'result');
@@ -54,24 +53,20 @@ const populateHTML = function (nodeObject) {
 /* ### B: fetch()-request data to worker-api                             ### */
 /* ### C: handle response json from fetch()-request                      ### */
 
+// A: Make the object, B: populate it, C: stringify it when fetching
+
 const calculateButton = document.getElementById('calculate')
+
 calculateButton.addEventListener('click', (event) => {
-  const arithmeticSymbol = document.getElementById('arithmeticSymbol').value
+  const arithmeticSymbol = document.getElementById('arithmeticSymbol').value  
   const num1 = Number(document.getElementById('num1').value)
   const num2 = Number(document.getElementById('num2').value)
   const fetchPromise = fetch(encodeURI(window.location.origin + pathname + 'API?' + arithmeticSymbol + '={"num1":' + num1 + ',"num2":' + num2 + '}'))
   fetchPromise
     .then((response) => {
-      const contentType = response.headers.get('content-type')
-      console.log('### ### response content-type seen in app: ' + contentType)
-      console.dir(response)
-      console.log(response.headers)
       return response.json()
     })
     .then((data) => {
-      console.dir(data)
-      console.log('### response from worker-api-server: ' + JSON.stringify(data))
-      // Do something with what's returned
       populateHTML(data)
     })
     .catch((error) => {
