@@ -3,14 +3,15 @@ JavaScript service worker as a server for your webpage. Example library on how i
 
 Advantages:
 
-* **Snappy frontend - processing backend**
-  Have a JavaScript server in your browser. An extra thread for the heavy processing and separation of frontend and backend code.
+* **Have a JavaScript server in your browser**
+  * An extra thread for the heavy processing
+  * Separation of frontend and backend code
 * **Let other people create in no time**
-  Create a server that others easily can plug in to their project and get coding in minutes.
+  * Create a server that others easily can plug in to their project and get coding in minutes
 * **Easy to maintain**
-  Browser updates fixes most issues compared to a classic server
+  * Browser updates fixes most issues compared to a classic server
 * **Only static files**
-  Perfect for i.e. hosting with GitHub Pages
+  * Perfect for i.e. hosting with GitHub Pages
 
 
 **[webpage-server-example](https://eklem.github.io/webpage-server/)**
