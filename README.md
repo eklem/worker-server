@@ -1,16 +1,14 @@
 # webpage-server
 JavaScript service worker as a server for your webpage. Example library on how it can be done. 
 
-Advantages:
+**Advantages:**
 
-* **Snappy frontend - processing backend**
-  Have a JavaScript server in your browser. An extra thread for the heavy processing and separation of frontend and backend code.
-* **Let other people create in no time**
-  Create a server that others easily can plug in to their project and get coding in minutes.
-* **Easy to maintain**
-  Browser updates fixes most issues compared to a classic server
-* **Only static files**
-  Perfect for i.e. hosting with GitHub Pages
+1. Easy separation of code
+2. Extra thread for heavy lifting
+3. Notifications at your hand (when the heavy lifting is done?)
+4. Easy to create a server template others can use quickly for their projects
+5. Easy to maintain, browser updates take care of most stuff
+6. Only static files, can be hosted cheap, also GitHub pages
 
 
 **[webpage-server-example](https://eklem.github.io/webpage-server/)**
@@ -48,7 +46,7 @@ For tasks taking a long time, the webpage-server will use postMessage over a bro
 
 Actually not needed, not even an empty file. If you request this file with a fetch(), the webpage-server.js will intercept the request and return a response as if it comes from the non-existing API-file.
 
-### manifest.webmanifest
+### manifest.json
 
 Manifest file. Main function is to make the web app installable on desktops and smartphones.
 
